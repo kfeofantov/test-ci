@@ -1,0 +1,12 @@
+stages:
+  - test
+  - build
+
+language: go
+
+jobs:
+  include:
+    - stage: test
+      script: go test -v ./...
+    - stage: build
+      script: echo "Docker build"

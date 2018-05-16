@@ -18,7 +18,6 @@ script:
   - echo "Hello!"
 
 before_deploy:
-  - yq write --inplace mail/Chart.yaml appVersion "${TRAVIS_TAG}"
   - helm package mail --app-version="${TRAVIS_TAG}"
   - helm repo index --url $HELM_URL --merge index.yaml .
 

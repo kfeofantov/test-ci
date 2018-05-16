@@ -12,9 +12,9 @@ services:
 install:
   - go get github.com/mikefarah/yq
   - curl https://raw.githubusercontent.com/kubernetes/helm/master/scripts/get | bash
-
+  - helm init --client-only
 script:
-  - echo "Hello!"
+  - helm repo index mail
 
 before_deploy:
   - yq write --inplace mail/Chart.yaml appVersion "${TRAVIS_TAG}"

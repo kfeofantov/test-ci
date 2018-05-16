@@ -9,8 +9,8 @@ env:
 services:
   - docker
 
-before_script:
-  - go get github.com/mikefarah/yq
+install:
+  - go get github.com/mikefarah/yq  
 
 script:
   - echo "Hello!"

@@ -10,7 +10,8 @@ services:
   - docker
 
 install:
-  - go get github.com/mikefarah/yq  
+  - go get github.com/mikefarah/yq
+  - curl https://raw.githubusercontent.com/kubernetes/helm/master/scripts/get | bash
 
 script:
   - echo "Hello!"

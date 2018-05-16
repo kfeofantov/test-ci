@@ -5,12 +5,12 @@ language: go
 env:
   global:
   - IMAGE_NAME=containerum/mail
+  - HELM_URL=https://kfeofantov.github.io/test-ci
 
 services:
   - docker
 
 install:
-  - go get github.com/mikefarah/yq
   - curl https://raw.githubusercontent.com/kubernetes/helm/master/scripts/get | bash
   - helm init --client-only
 
@@ -19,7 +19,8 @@ script:
 
 before_deploy:
   - yq write --inplace mail/Chart.yaml appVersion "${TRAVIS_TAG}"
-  - helm repo index mail
+  - helm package mail --app-version="${TRAVIS_TAG}"
+  - helm repo index --url $HELM_URL --merge index.yaml .
 
 deploy:
   - provider: pages

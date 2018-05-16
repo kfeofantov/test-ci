@@ -1,0 +1,13 @@
+apiVersion: v1
+entries:
+  user:
+  - apiVersion: v1
+    appVersion: "1"
+    created: 2018-05-16T21:43:36.781632593+03:00
+    description: Containerum User service
+    digest: 746a48271df0ebd9ee2656f267984e764cb10fac94f5d8958b6d9c90af3aca9b
+    name: user
+    urls:
+    - https://kfeofantov.github.io/test-ci/user-1.tgz
+    version: "1"
+generated: 2018-05-16T21:43:36.780474501+03:00

@@ -18,7 +18,6 @@ env:
   GIN_MODE: debug
   CH_USER_LOG_LEVEL: 5
   CH_USER_DB: "postgres"
-  CH_USER_PG_URL: "postgres://usermanager:ae9Oodai3aid@postgres:5432/usermanager?sslmode=disable"
   CH_USER_MIGRATIONS_PATH: "migrations"
   CH_USER_MAIL: "http"
   CH_USER_MAIL_URL: "http://ch-mail-templater:7070/"
@@ -34,4 +33,6 @@ env:
 postgresql:
   persistence:
     enabled: false
+  postgresUser: user
   postgresDatabase: user
+  postgresPassword: password

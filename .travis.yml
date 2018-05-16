@@ -1,12 +1,27 @@
-stages:
-  - test
-  - build
+sudo: required
 
 language: go
 
-jobs:
-  include:
-    - stage: test
-      script: go test -v ./...
-    - stage: build
-      script: echo "Docker build"
+env:
+  global:
+  - IMAGE_NAME=containerum/mail
+
+services:
+  - docker
+
+before_script:
+  - go get github.com/mikefarah/yq
+
+script:
+  - echo "Hello!"
+
+before_deploy:
+  - yq write --inplace mail/Chart.yaml appVersion "${TRAVIS_TAG}"
+
+deploy:
+  - provider: pages
+    skip-cleanup: true
+    github-token: $GITHUB_TOKEN
+    keep-history: true
+    on:
+      tags: master

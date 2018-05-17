@@ -6,19 +6,16 @@ env:
   global:
   - NAME=user
   - HELM_URL=https://kfeofantov.github.io/charts/test-ci
-  - LATEST_RELEASE=v1.0.0-rc10
 
 services:
   - docker
 
 install:
-  - sudo apt-get install jq
   - curl https://raw.githubusercontent.com/kubernetes/helm/master/scripts/get | bash
   - helm init --client-only
 
 script:
-  - LATEST_RELEASE=`curl https://api.github.com/repos/kfeofantov/test-ci/releases/latest | jq ".tag_name"`
-  - echo $LATEST_RELEASE
+  - echo Hello!
 
 before_deploy:
   -
@@ -29,7 +26,7 @@ deploy:
   - provider: pages
     skip-cleanup: true
     github-token: $GITHUB_TOKEN
-    keep-history: false
+    keep-history: true
     on:
       tags: true
   - provider: releases

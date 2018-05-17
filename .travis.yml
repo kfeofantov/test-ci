@@ -31,8 +31,9 @@ deploy:
       tags: true
   - provider: releases
     api_key: $GITHUB_TOKEN
-    file_glob: true
-    file: charts/**/*
+    file:
+      - "charts/$NAME-${TRAVIS_TAG}.tgz"
+      - "charts/index.yaml"
     skip_cleanup: true
     on:
       tags: true

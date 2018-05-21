@@ -13,12 +13,16 @@ services:
 install:
   - curl https://raw.githubusercontent.com/kubernetes/helm/master/scripts/get | bash
   - helm init --client-only
+  - sudo apt-get install jq
 
 script:
-  - echo Hello!
+  - wget https://api.github.com/repos/kfeofantov/test-ci/releases
+  - cat releases | jq '.[].assets[].browser_download_url | select(. | test(".tgz")) | select(. | test("user"))' > download
+  - xargs -i wget '{}' < download
+  - rm releases
+  - rm download
 
 before_deploy:
-  -
   - helm package charts/$NAME --version="${TRAVIS_TAG}" --dependency-update --destination charts
   - helm repo index --url $HELM_URL --merge charts/index.yaml charts
 
@@ -27,6 +31,7 @@ deploy:
     skip-cleanup: true
     github-token: $GITHUB_TOKEN
     keep-history: true
+    verbose: true
     on:
       tags: true
   - provider: releases

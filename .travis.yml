@@ -20,8 +20,9 @@ script:
   - echo "Hi"
 
 before_deploy:
-  - yq write --inplace charts/api-gateway/values.yaml image.tag "${TRAVIS_TAG}"
-  - helm package charts/$NAME --version="${TRAVIS_TAG}" --dependency-update --destination charts
+  - yq write --inplace charts/$NAME/values.yaml image.tag "${TRAVIS_TAG}"
+  - sudo mkdir -p /usr/local/charts
+  - helm package charts/$NAME --version="${TRAVIS_TAG}" --dependency-update --destination /usr/local/charts
   - helm repo add chartmuseum https://charts.containerum.io
 
 deploy:
@@ -35,8 +36,8 @@ deploy:
   - provider: releases
     api_key: $GITHUB_TOKEN
     file:
-      - "charts/$NAME-${TRAVIS_TAG}.tgz"
-      - "charts/index.yaml"
+      - "/usr/local/charts/$NAME-${TRAVIS_TAG}.tgz"
+      - "/usr/local/charts/index.yaml"
     skip_cleanup: true
     on:
       tags: true

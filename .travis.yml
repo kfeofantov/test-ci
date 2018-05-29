@@ -5,7 +5,7 @@ language: go
 env:
   global:
   - NAME=user
-  
+
 services:
   - docker
 
@@ -20,9 +20,6 @@ script:
   - echo "Hi"
 
 before_deploy:
-  - docker login -u="$DOCKER_LOGIN" -p="$DOCKER_PASSWORD"
-  - docker tag "$IMAGE_NAME" "${IMAGE_NAME}:latest"
-  - docker tag "$IMAGE_NAME" "${IMAGE_NAME}:${TRAVIS_TAG}"
   - yq write --inplace charts/api-gateway/values.yaml image.tag "${TRAVIS_TAG}"
   - helm package charts/$NAME --version="${TRAVIS_TAG}" --dependency-update --destination charts
   - helm repo add chartmuseum https://charts.containerum.io
